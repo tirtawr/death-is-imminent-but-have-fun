@@ -21,6 +21,10 @@
  } 
 
  void loop() { 
+
+ }
+
+ void reLoop() {
    reState = digitalRead(reOutputA); // Reads the "current" state of the outputA
    // If the previous and the current state of the outputA are different, that means a Pulse has occured
    if (reState != reLastState){     
