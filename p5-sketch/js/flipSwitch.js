@@ -8,13 +8,14 @@ button class
 
 class flipSwitch{
   constructor(name){
+    this.type = "Flip";
     this.name = name;
     this.occupied = false;
     
     this.flip = 0;
     this.state = false;
     
-    this.on = false;
+    this.on = -1;
   }
   
   //run as serial input comes in
@@ -34,12 +35,13 @@ class flipSwitch{
     if(this.flip == 1 && this.state == false){
 
       this.state = true;
-      this.on = !this.on;
+      this.on = 1;
       return [true,this.on];
     }
     else if(this.flip == 0 && this.state == true){
       this.state = false;
-      return [false,this.on];
+      this.on = 0;
+      return [true,this.on];
     }
     else{
       return [false,this.on];
@@ -50,10 +52,35 @@ class flipSwitch{
   //return the name and the state
   instruct(){
     var text;
-    if(this.on){
+    var determinant;
+
+    
+    if(this.on == 1){
+       determinant = 0;
        text = 'Turn '+this.name+' to off';
     }
-    else text = 'Turn '+this.name+' to on';
-    return [this.name,text];
+    else if(this.on == 0){
+      determinant = 1;
+      text = 'Turn '+this.name+' to on';
+    }
+
+    //when at initial state
+    //this.on is not initialized yet
+    else if(this.on == -1){
+      if(this.flip == 1){
+        determinant = 0;
+        text = 'Turn '+this.name+' to off';
+      }
+      else{
+        determinant = 1;
+        text = 'Turn '+this.name+' to on';
+      }
+    }
+    
+    //return:
+    //the name of the interacts
+    //the instruction texts
+    //the state that needs to be achieved 
+    return [this.name,text,determinant];
   }
 }
