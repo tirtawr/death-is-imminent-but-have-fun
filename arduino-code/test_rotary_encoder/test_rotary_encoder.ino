@@ -4,7 +4,7 @@
  *  
  */
  
- #define reOutputA 6
+ #define reOutputA 8
  #define reOutputB 7
 
  int reCounter = 0; 
@@ -21,7 +21,7 @@
  } 
 
  void loop() { 
-
+    reLoop();
  }
 
  void reLoop() {
