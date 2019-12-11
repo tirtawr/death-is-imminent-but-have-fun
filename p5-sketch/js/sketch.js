@@ -14,7 +14,7 @@ var allInstructs = [];
 
 //flow of control
 //var countdown = [50,40,30,26,24,23,22,21,20,19,18,16,15,14,12,11,9,7,6,5];
-var countdown = [10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10];
+var countdown = [5,5,5,25,25,25,25,25,25,25,10,10,10,10,10,10,10,10,10,10];
 var progress = 0;
 var lives = 10;
 var offset = 0;
@@ -23,16 +23,19 @@ var roundGoing = false;
 var hits = 0;
 var timer = 0;
 var phase = 0;
+var lastTimer = 0;
 
 function setup() {
+  //failSound.play();
+
   createCanvas(400, 400);
   initConsole();
   
   //serial data initialization
-  serialDatas[0] = [0,0,0,0,[0,0,0]];
+  serialDatas[0] = [0,0,[0,0,0],0,0,0];
   serialDatas[1] = [0,0,0,0,0,0];
-  serialDatas[2] = [0];
-  serialDatas[3] = [0];
+  serialDatas[2] = [0,0,0,0,[0,0,0],0];
+  serialDatas[3] = [0,0,0,0,0,0];
   
   serialSetup();
   //get instruction in each round
@@ -42,14 +45,20 @@ function setup() {
 function draw() {
   background(220);
   //phase 0 : introduction
+
+  if(lives < 0){
+    phase++;
+  }
+
   if(phase == 0){
-    text("earth is fucked.",width/2,height/2)
+    //text("earth is fucked.",width/2,height/2)
   }
   else if(phase == 1){
     //if it is a new round
     //record timestamp
     //put hits to 0
     //fetch new round of instruction
+    serialUpdate();
     if(roundGoing == false){
       offset = int(millis());
       roundGoing = true;
@@ -59,18 +68,19 @@ function draw() {
 
     //if in round
     else{
-
-
-
       //if lives goes to 0
       //game fails
-      if(lives < 0){
-        phase++;
-      }
+      
       
       //if within time 
       if(int(millis()) - offset < countdown[rounds]*1000){
-        timer = countdown[rounds]*1000 - (int(millis()) - offset);
+        timer = (countdown[rounds]*1000 - (int(millis()) - offset));
+        // if(int(timer/1000) != lastTimer){
+        //   console.log(lastTimer);
+        //   lastTimer = int(timer/1000);
+        //   pushInfo();
+        // }
+        lastTimer = int(timer/1000);
         printAllStats();
       }
       //if time runs out
@@ -78,7 +88,6 @@ function draw() {
         roundGoing = false;
 
         progress += 1.5 * hits;
-
         lives -= 4-hits;
         
         
@@ -94,16 +103,28 @@ function draw() {
   //failure
   else if (phase ==2){
     text("you fucked.",width/2,height/2)
+    newPlay(failSound);
+    for (var LCD in LCDInfo){
+      var text1 = "OMG Your Ship explodes"
+      text1 = populate(text1);
+      if(text.length < 80){
+        text1 += "                    ";
+      }
+      serials[LCD].write(text1);
+      
+    }
+    noLoop();
   }
 
   else if (phase ==3){
     text("you fucking good.",width/2,height/2)
+    noLoop();
   }
 
 
 
   //update serial inputs
-  serialUpdate();
+  
   //force event listen on every interact
   listenEvents();
   //debug
@@ -116,11 +137,8 @@ function printAllStats(){
   text("progress: "+progress,width/2,height/2+30);
   text("round: "+rounds,width/2,height/2+45);
   text("hits: "+hits,width/2,height/2+60);
+  text("Ins: "+LCDInfo,width/2,height/2+75)
 }
-
-
-
-
 
 
 //fake serial communication
@@ -166,6 +184,11 @@ function keyReleased(){
 function keyPressed(){
   if(key == '.'){
     phase ++;
+  }
+  if(phase == 0){
+    if(key == " "){
+      newPlay(introSound);  
+    }
   }
 
   else if(keyCode == UP_ARROW){

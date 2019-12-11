@@ -16,7 +16,11 @@ class sliderPot{
       this.state = false;
       this.prvReading = [0,0,0,0,0];
 
-      this.ranges = [0,50,100];
+      //left is big, 100
+      //right is small, 0
+      //down is big, 100
+      //top is small, 0
+      this.ranges = [0,100];
       this.currentRange = -1;
       
       this.on = -1;
@@ -25,13 +29,17 @@ class sliderPot{
     //run as serial input comes in
     //stores the sensor data
     update(input){
-      console.log(input)
+      //console.log(input)
       this.reading = input;
       this.prvReading.unshift(this.reading);
       if(this.prvReading.length == 21){
         this.prvReading.pop();
       }
       //console.log(this.prvReading);
+    }
+    
+    initialize(){
+      
     }
     
     //listen event
@@ -68,18 +76,15 @@ class sliderPot{
     }
     
     determineRange(){
+      //left & down
         if(this.on >= 900){
-            this.currentRange = this.ranges[0]
-            return [true,this.ranges[0]];
-        }
-        else if(this.on >= 600 && this.on <= 800){
             this.currentRange = this.ranges[1]
             return [true,this.ranges[1]];
         }
-
-        else if(this.on <= 600){
-            this.currentRange = this.ranges[2]
-            return [true,this.ranges[2]];
+      //right & down
+        else if(this.on <= 200){
+            this.currentRange = this.ranges[0]
+            return [true,this.ranges[0]];
         }
         else return[false,-1];
     }
@@ -87,32 +92,42 @@ class sliderPot{
     //generate instruction
     //return the name and the state
     instruct(){
-        var text;
+        var text1;
         var determinant;
+        console.log(this.name+" begins at "+this.reading)
         if(this.currentRange == 0){
-          determinant = random([50,100]);
+          determinant = 100;
         }
-        else if(this.currentRange == 50){
-          determinant = random([0,100]);
-        }
-        else if(this.currentRange == 100)  determinant = random([0,50]);
+        else if(this.currentRange == 100)  determinant = 0;
         else if(this.currentRange == -1){
+          
           if(this.reading >= 900){
-            determinant = random([50,100]);
+            determinant = 0;
           }
-
-          else if(this.reading >= 600 && this.reading <= 800){
-            determinant = random([0,100]);
+          else if(this.reading <= 200){
+            determinant = 100;
           }
-
-          else if(this.reading <= 600){
-            determinant = random([50,0]);
-          }
-          else determinant = random([100,50,0]);
+          else determinant = random([100,0]);
         }
         
-        text = 'Slide '+this.name+' to '+determinant;
-  
-        return [this.name,text,determinant];
+        if(determinant == 100){
+          if(this.name == "Nano" || this.name == "Motion" || this.name == "Counter"){
+            text1 = 'Slide '+this.name+' to left';
+          }   
+          else{
+            text1 = 'Slide '+this.name+' to bottom';
+          }
+        }
+        else{
+          if(this.name == "Nano" || this.name == "Motion" || this.name == "Counter"){
+            text1 = 'Slide '+this.name+' to right';
+          }   
+          else{
+            text1 = 'Slide '+this.name+' to top';
+          }
+        }
+        
+        
+        return [this.name,text1,determinant];
     }
   }

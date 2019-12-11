@@ -6,7 +6,7 @@ jack class
 4. event listener when its hit
 */
 
-class matrix{
+class Matrix{
     constructor(name){
       this.type = "Matrix";
       this.name = name;
@@ -14,17 +14,33 @@ class matrix{
       
       
       this.state = [false,false,false];
-      
+      this.initial = -1;
       this.on = [-1,-1,-1];
     }
     
     //run as serial input comes in
     //stores the sensor data
     update(input){
-      //console.log(input);
+      
+      if(this.initial == -1){
+        //console.log(input);
+        for(var i = 0 ; i < this.on.length ; i++){
+          if(input[i] == 1){
+            this.initial = i;
+            return;
+          }
+        }
+      }
+      
+
       this.on = input;
+      //console.log(this.on)
     }
     
+    initialize(){
+      
+    }
+
     //listen event
     //return true if its a hit
     //return false if its a false;
@@ -41,7 +57,15 @@ class matrix{
           //return true for trigger
           //return the state for that trigger 
           //return the index
-          return [true,this.on[i],i];
+          //console.log(this.initial);
+          if(this.avoidInitial(i)){
+            return [true,this.on[i],i];
+          }
+
+          else {
+            return [false,this.on[i],i];
+          }
+          
         }
         else if(this.on[i] == 0 && this.state[i] == true){
           this.state[i] = false;
@@ -58,23 +82,43 @@ class matrix{
     //generate instruction
     //return the name and the state
     instruct(){
-      var text;
+      var text1;
       var determinant;
-      
+      //console.log(this.on)
+      console.log(this.name+" "+" on:"+this.on);
       if(this.on[0] == 1){
         determinant = random([3,4]);
-        
+        this.initial = 0;
       }
       else if(this.on[1] == 1){
         determinant = random([2,4]);
+        this.initial = 1;
+        //console.log("triggered")
       }
       else if(this.on[2] == 1){
         determinant = random([2,3]);
+        this.initial = 0;
       } 
       else  determinant = random([2,3,4]);
+      this.initial = -1;
 
-      text = 'On '+this.name+'Connect Jack 1 to Jack'+determinant;
+      text1 = 'Connect '+this.name[0]+' to '+this.name[determinant-1];
       
-      return [this.name,text,determinant];
+      return [this.name,text1,determinant];
+    }
+
+    avoidInitial(a){
+      //base case
+      if(this.initial == -1){
+        return true;
+      }
+      //when detection is on the initial
+      if(a == this.initial){
+        return false;
+      }
+      else {
+        this.initial = -1;
+        return true;
+      }
     }
   }

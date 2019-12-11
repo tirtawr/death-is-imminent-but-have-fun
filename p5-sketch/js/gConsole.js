@@ -23,6 +23,8 @@ class gConsole {
     this.serialData = [];
     this.curIns = null;
     this.lastHit = ['null','null'];
+
+    this.pushInfo = null;
   }
   
   //get a instruction randomly
@@ -30,16 +32,38 @@ class gConsole {
   getInstruction() {
     var interact = random(this.allButtons);
     //testing
-    interact = this.allButtons[2];
+    // if(this.id == 1){
+    //   interact = this.allButtons[5];
+    // }
+
+    // else if(this.id == 2){
+    //   interact = this.allButtons[3];
+    // }
+
+    // else if(this.id == 3){
+    //   interact = this.allButtons[3];
+    // }
+
+    // else if(this.id == 4){
+    //   interact = this.allButtons[3];
+    // }
+    
+    //interact = this.allButtons[2];
+    //console.log(interact.name+" giving ins");
     var instruction = interact.instruct();
+    
     this.curIns = instruction;
-    console.log(this.curIns);
+
+    return instruction;
+    //console.log(this.curIns);
   }
   
   //update the serial communication data
   updateAll() {
     for (var button in this.allButtons) {
       this.allButtons[button].update(this.serialData[button]); 
+      //if(this.id == 2)
+      //console.log(this.allButtons[button].name+": "+this.serialData[button])
     }
   }
   
@@ -68,22 +92,23 @@ class gConsole {
             console.log("great!");
             hits ++;
             this.curIns = null;
-
+            //console.log(this.id);
+            LCDInfo[traceLCDConsole(this.id-1)][0] = "Good JOB!";
+            pushInfo();
             //once the instruction is done
             //stop listen
             return;
-          }
-          
-          else{
-            console.log("fuck!");
-            lives--;
-          }
-          
-        }
+          }    
 
+          else{
+            console.log("fuck! "+result);
+            lives--;
+            pushInfo();
+            //this.updateFail(traceLCDConsole(this.id-1));
+          }         
+        }
       }
     }
-
   }
 
 
@@ -124,7 +149,16 @@ class gConsole {
       }
 
       else if (button.type == "Slider"){
+        
         if(result[1] == this.curIns[2])
+        {
+          return true;
+        }
+        else return false;
+      }
+
+      else if (button.type == "Rotary"){
+        if(result[0])
         {
           return true;
         }
@@ -132,5 +166,16 @@ class gConsole {
       }
     } 
   }
+
+  updateDone(i){
+      //generate 
+    
+    
+    LCDInfo[i] = createLCDText(LCDInfo[i]);
+    serials[i].write(LCDInfo[i][4]);
+    
+    console.log("Good job: "+ LCDInfo[i][4])
+  }
+
 
 }

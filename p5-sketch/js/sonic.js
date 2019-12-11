@@ -15,20 +15,37 @@ class Sonic{
       this.reading = 0;
       this.state = false;
       this.prvReading = [0,0,0,0,0];
-      
+      this.initial = -1;
       this.on = -1;
     }
-    
     //run as serial input comes in
     //stores the sensor data
     update(input){
-        this.reading = input;
+      //console.log(this.name+" "+input);
+      this.reading = input;
+      if(this.initial == -1){
+        
+        if(this.reading < 8){
+          this.initial = 1;
+        }
+        else{
+          this.initial = 0;
+        }
+        console.log(this.name + " give initials: "+this.initial)
+      }
+      //console.log("initial is "+this.initial)
+
+        
         this.prvReading.unshift(this.reading);
         if(this.prvReading.length == 21){
           this.prvReading.pop();
         }
     }
-    
+
+    initialize(){
+      
+    }
+
     //listen event
     //return true if its a hit
     //return false if its a false;
@@ -52,15 +69,34 @@ class Sonic{
       if(stopped == 1){
         //console.log("current reading: "+this.reading)
         if(this.reading < 8 && this.state == false){
-        
+            
             this.state = true;
             this.on = 1;
-            return [true,this.on];
+            var result1 = this.avoidInitial(this.on);
+            //console.log(result1);
+            if(result1){
+              console.log(this.name + " cover")
+              return [true,this.on];
+              
+            }
+            else{
+              return [false,this.on];
+            }
+            
           }
           else if(this.reading > 20 && this.state == true){
             this.state = false;
             this.on = 0;
-            return [true,this.on];
+            console.log()
+            var result1 = this.avoidInitial(this.on);
+            //console.log(result1);
+            if(result1){
+              console.log(this.name +" uncover")
+              return [true,this.on];
+            }
+            else{
+              return [false,this.on];
+            }
           }
       }
       
@@ -71,27 +107,44 @@ class Sonic{
     //generate instruction
     //return the name and the state
     instruct(){
-      var text;
+      var text1;
       var determinant;
+      
+      
 
       if(this.on == 0){
         determinant = 1;
-        text = 'Cover '+this.name;
+        text1 = 'Cover '+this.name;
       }
       else if(this.on == 1){
         determinant = 0;
-        text = 'Uncover '+this.name;
+        text1 = 'Uncover '+this.name;
       }
       else if (this.on == -1){
         if(this.reading > 10){
             determinant = 1;
-            text = 'Cover '+this.name;
+            text1 = 'Cover '+this.name;
         }
         else if(this.reading < 10){
             determinant = 0;
-            text = 'Uncover '+this.name;
+            text1 = 'Uncover '+this.name;
         }
       }
-      return [this.name,text,determinant];
+      return [this.name,text1,determinant];
+    }
+
+    avoidInitial(a){
+      //base case
+      if(this.initial == -1){
+        return true;
+      }
+      //when detection is on the initial
+      if(a == this.initial){
+        return false;
+      }
+      else {
+        this.initial = -1;
+        return true;
+      }
     }
   }

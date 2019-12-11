@@ -7,7 +7,7 @@
 LiquidCrystal_I2C lcd(0x27, 2, 1, 0, LCD_SCL_PIN, LCD_SDA_PIN, 6, 7, 3, POSITIVE);  // Set the LCD I2C address
 
 void setup()  
-{
+{ 
   lcd.begin(20,4); 
   printText("this_is_line_1_abcdethis_is_line_2_abcdethis_is_line_3_abcdethis_is_line_4_abcde");
 }

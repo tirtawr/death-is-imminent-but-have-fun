@@ -23,6 +23,10 @@ class Button{
     update(input){
       this.hit = input;
     }
+
+    initialize(){
+      
+    }
     
     //listen event
     //return true if its a hit
@@ -51,8 +55,8 @@ class Button{
     //generate instruction
     //return the name and the state
     instruct(){
-      var text;
-      text = 'Hit '+this.name;
-      return [this.name,text];
+      var text1;
+      text1 = 'Hit '+this.name;
+      return [this.name,text1];
     }
   }

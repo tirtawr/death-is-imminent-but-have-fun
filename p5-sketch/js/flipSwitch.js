@@ -13,16 +13,28 @@ class flipSwitch{
     this.occupied = false;
     
     this.flip = 0;
-    this.state = false;
+    this.state = [false,false];
     
+    this.initial = -1;
     this.on = -1;
   }
   
   //run as serial input comes in
   //stores the sensor data
   update(input){
+    //console.log("initial is "+this.initial)
     this.flip = input;
+    if(this.initial == -1){
+      if(this.flip == 1){
+        this.initial = 1;
+      }
+      else{
+        this.initial = 0;
+      }
+    }
+    
   }
+
   
   //listen event
   //return true if its a hit
@@ -32,16 +44,42 @@ class flipSwitch{
     //return an array
     //[0]: true if triggered
     //[1]: switch data
-    if(this.flip == 1 && this.state == false){
+    // if(this.initial == 0){
+    //   console.log("the flip is "+this.flip)
+    // }
 
-      this.state = true;
+    if(this.flip == 1 && this.state[0] == false){
+      this.state[0] = true;
+      this.state[1] = false;
       this.on = 1;
-      return [true,this.on];
+      // console.log("good hit")
+      // console.log("initial is "+this.initial)
+      // console.log("this on is "+ this.on)
+      var result1 = this.avoidInitial(this.on);
+      //console.log(result1);
+      
+      if(result1){
+        
+        return [true,this.on];
+      }
+      else{
+        return [false,this.on];
+      } 
     }
-    else if(this.flip == 0 && this.state == true){
-      this.state = false;
+    else if(this.flip == 0 && this.state[1] == false){
+      this.state[1] = true;
+      this.state[0] = false;
       this.on = 0;
-      return [true,this.on];
+      //console.log("good hit")
+      var result1 = this.avoidInitial(this.on);
+      //console.log(result1);
+      if(result1){
+        
+        return [true,this.on];
+      }
+      else{
+        return [false,this.on];
+      }
     }
     else{
       return [false,this.on];
@@ -51,17 +89,17 @@ class flipSwitch{
   //generate instruction
   //return the name and the state
   instruct(){
-    var text;
+    var text1;
     var determinant;
 
     
     if(this.on == 1){
        determinant = 0;
-       text = 'Turn '+this.name+' to off';
+       text1 = 'Turn '+this.name+' to off';
     }
     else if(this.on == 0){
       determinant = 1;
-      text = 'Turn '+this.name+' to on';
+      text1 = 'Turn '+this.name+' to on';
     }
 
     //when at initial state
@@ -69,11 +107,11 @@ class flipSwitch{
     else if(this.on == -1){
       if(this.flip == 1){
         determinant = 0;
-        text = 'Turn '+this.name+' to off';
+        text1 = 'Turn '+this.name+' to off';
       }
       else{
         determinant = 1;
-        text = 'Turn '+this.name+' to on';
+        text1 = 'Turn '+this.name+' to on';
       }
     }
     
@@ -81,6 +119,22 @@ class flipSwitch{
     //the name of the interacts
     //the instruction texts
     //the state that needs to be achieved 
-    return [this.name,text,determinant];
+    return [this.name,text1,determinant];
+  }
+
+  avoidInitial(a){
+    //base case
+    if(this.initial == -1){
+      return true;
+    }
+    //when detection is on the initial
+    if(a == this.initial){
+      return false;
+    }
+    //the it is a hit
+    else {
+      this.initial = -1;
+      return true;
+    }
   }
 }
