@@ -128,14 +128,15 @@ function newRoundInstruct(){
   }
 
   //make sure first 3 rounds assign not themselve instruction
-  if(round == 0 || round == 1 || round == 2){
-    LCDInfo = specficAssign(LCDInfo);
-  }
-  else{
-    LCDInfo = shuffle(LCDInfo);
-  }
+  // if(round == 0 || round == 1 || round == 2){
+  //   LCDInfo = specficAssign(LCDInfo);
+  // }
+  // else{
+  //   LCDInfo = shuffle(LCDInfo);
+  // }
   //console.log(LCDInfo)
   //generate 
+  LCDInfo = shuffle(LCDInfo);
   pushInfo();
 }
 

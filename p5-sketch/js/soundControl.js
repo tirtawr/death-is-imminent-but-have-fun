@@ -1,12 +1,15 @@
 var progressSound = [];
 var failSound;
 var introSound;
-
+var goodHitSound;
+var badHitSound;
 var progressTrigger = [false,false,false,false,false,false];
 
 function preload(){
     failSound = loadSound("./sounds/lose.wav");
     introSound = loadSound("./sounds/introduction.wav");
+    goodHitSound = loadSound("./sounds/good.ogg");
+    badHitSound = loadSound("./sounds/bad.mp3");
     progressSound.push(loadSound("./sounds/10.wav"));
     progressSound.push(loadSound("./sounds/30.wav"));
     progressSound.push(loadSound("./sounds/50.wav"));
@@ -23,41 +26,41 @@ function newPlay(a){
 function playProgress(){
     if(progress >= 10 && progress <30){
         if(progressTrigger[0] == false){
-            newPlay(progress[0]);
+            newPlay(progressSound[0]);
             progressTrigger[0] = true;
         }  
     }
     else if(progress >= 30 && progress <50){
         if(progressTrigger[1] == false){
-            newPlay(progress[1]);
+            newPlay(progressSound[1]);
             progressTrigger[1] = true;
         } 
 
     }
     else if(progress >= 50 && progress <70){
         if(progressTrigger[2] == false){
-            newPlay(progress[2]);
+            newPlay(progressSound[2]);
             progressTrigger[2] = true;
         } 
 
     }
     else if(progress >= 70 && progress <90){
         if(progressTrigger[3] == false){
-            newPlay(progress[3]);
+            newPlay(progressSound[3]);
             progressTrigger[3] = true;
         } 
 
     }
     else if(progress >= 90 && progress <100){
         if(progressTrigger[4] == false){
-            newPlay(progress[4]);
+            newPlay(progressSound[4]);
             progressTrigger[4] = true;
         } 
 
     }
     else if(progress >= 100){
         if(progressTrigger[5] == false){
-            newPlay(progress[5]);
+            newPlay(progressSound[5]);
             progressTrigger[5] = true;
         } 
 

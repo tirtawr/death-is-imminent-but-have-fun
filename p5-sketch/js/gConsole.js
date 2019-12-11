@@ -32,21 +32,21 @@ class gConsole {
   getInstruction() {
     var interact = random(this.allButtons);
     //testing
-    // if(this.id == 1){
-    //   interact = this.allButtons[5];
-    // }
+    if(this.id == 1){
+      interact = this.allButtons[5];
+    }
 
-    // else if(this.id == 2){
-    //   interact = this.allButtons[3];
-    // }
+    else if(this.id == 2){
+      interact = this.allButtons[3];
+    }
 
-    // else if(this.id == 3){
-    //   interact = this.allButtons[3];
-    // }
+    else if(this.id == 3){
+      interact = this.allButtons[3];
+    }
 
-    // else if(this.id == 4){
-    //   interact = this.allButtons[3];
-    // }
+    else if(this.id == 4){
+      interact = this.allButtons[3];
+    }
     
     //interact = this.allButtons[2];
     //console.log(interact.name+" giving ins");
@@ -90,6 +90,7 @@ class gConsole {
 
           if(determine){
             console.log("great!");
+            newPlay(goodHitSound);
             hits ++;
             this.curIns = null;
             //console.log(this.id);
@@ -102,6 +103,7 @@ class gConsole {
 
           else{
             console.log("fuck! "+result);
+            newPlay(badHitSound);
             lives--;
             pushInfo();
             //this.updateFail(traceLCDConsole(this.id-1));

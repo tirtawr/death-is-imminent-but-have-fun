@@ -13,8 +13,8 @@ var serialDatas = [];
 var allInstructs = [];
 
 //flow of control
-//var countdown = [50,40,30,26,24,23,22,21,20,19,18,16,15,14,12,11,9,7,6,5];
-var countdown = [5,5,5,25,25,25,25,25,25,25,10,10,10,10,10,10,10,10,10,10];
+var countdown = [50,45,40,30,27,24,21,18,15,12,10,8];
+//var countdown = [15,15,15,25,25,25,25,25,25,25,10,10,10,10,10,10,10,10,10,10];
 var progress = 0;
 var lives = 10;
 var offset = 0;
@@ -60,6 +60,7 @@ function draw() {
     //fetch new round of instruction
     serialUpdate();
     if(roundGoing == false){
+      playProgress();
       offset = int(millis());
       roundGoing = true;
       hits = 0;
@@ -87,7 +88,8 @@ function draw() {
       else{
         roundGoing = false;
 
-        progress += 1.5 * hits;
+        //progress += 1.5 * hits;
+        progress += 9;
         lives -= 4-hits;
         
         
