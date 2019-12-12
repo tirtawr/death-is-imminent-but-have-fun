@@ -86,20 +86,40 @@ class Matrix{
       var determinant;
       //console.log(this.on)
       console.log(this.name+" "+" on:"+this.on);
-      if(this.on[0] == 1){
-        determinant = random([3,4]);
-        this.initial = 0;
+
+      if(this.name[0] == "Algol"){
+        if(this.on[0] == 1){
+          determinant = random([3,4]);
+          this.initial = 0;
+        }
+        else if(this.on[1] == 1){
+          determinant = 4;
+          this.initial = 1;
+          //console.log("triggered")
+        }
+        else if(this.on[2] == 1){
+          determinant = 3;
+          this.initial = 0;
+        } 
+        else  determinant = random([2,3,4]);
       }
-      else if(this.on[1] == 1){
-        determinant = random([2,4]);
-        this.initial = 1;
-        //console.log("triggered")
+      else{
+        if(this.on[0] == 1){
+          determinant = random([3,4]);
+          this.initial = 0;
+        }
+        else if(this.on[1] == 1){
+          determinant = random([2,4]);
+          this.initial = 1;
+          //console.log("triggered")
+        }
+        else if(this.on[2] == 1){
+          determinant = random([2,3]);
+          this.initial = 0;
+        } 
+        else  determinant = random([2,3,4]);
       }
-      else if(this.on[2] == 1){
-        determinant = random([2,3]);
-        this.initial = 0;
-      } 
-      else  determinant = random([2,3,4]);
+      
       this.initial = -1;
 
       text1 = 'Connect '+this.name[0]+' to '+this.name[determinant-1];

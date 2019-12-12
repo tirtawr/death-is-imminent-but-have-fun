@@ -31,22 +31,22 @@ class gConsole {
   //from its interacts 
   getInstruction() {
     var interact = random(this.allButtons);
-    //testing
-    if(this.id == 1){
-      interact = this.allButtons[5];
-    }
+    // //testing
+    // if(this.id == 1){
+    //   interact = this.allButtons[5];
+    // }
 
-    else if(this.id == 2){
-      interact = this.allButtons[3];
-    }
+    // else if(this.id == 2){
+    //   interact = this.allButtons[3];
+    // }
 
-    else if(this.id == 3){
-      interact = this.allButtons[3];
-    }
+    // else if(this.id == 3){
+    //   interact = this.allButtons[3];
+    // }
 
-    else if(this.id == 4){
-      interact = this.allButtons[3];
-    }
+    // else if(this.id == 4){
+    //   interact = this.allButtons[3];
+    // }
     
     //interact = this.allButtons[2];
     //console.log(interact.name+" giving ins");
@@ -73,7 +73,7 @@ class gConsole {
     if (this.curIns != null) {
       for (var button of this.allButtons) {
         var result = button.listen();
-        // if(button.name == "Doper"){
+        // if(button.name == "South"){
         //   console.log(result);
         // }
 
@@ -81,6 +81,7 @@ class gConsole {
         
         //if it is an active interaction from on kind
         if (result[0]) {
+          console.log(result)
           //record the last hit interacts
           this.lastHit = result;
 

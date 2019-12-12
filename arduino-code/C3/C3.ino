@@ -29,11 +29,13 @@ int aLastState;
 
 void setup() {
   Serial.begin(9600);
+  pinMode(A0,INPUT);
   pinMode(2,INPUT);
   pinMode(3,INPUT);
   pinMode(4,INPUT);
   pinMode(5,INPUT);
   pinMode(6,INPUT);
+  pinMode(7,INPUT);
 //  pinMode(A1,INPUT);
 //  pinMode(A2,INPUT);
 
@@ -107,7 +109,7 @@ void loop() {
   button = digitalRead(3);
   slider1 = analogRead(A2);
   slider2 = analogRead(A3);
-  matrix[0] = digitalRead(4);
+  //matrix[0] = analogRead(A0);
   matrix[1] = digitalRead(5);
   matrix[2] = digitalRead(6);
 

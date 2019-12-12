@@ -21,6 +21,7 @@ class Sonic{
     //run as serial input comes in
     //stores the sensor data
     update(input){
+      
       //console.log(this.name+" "+input);
       this.reading = input;
       if(this.initial == -1){
@@ -37,7 +38,7 @@ class Sonic{
 
         
         this.prvReading.unshift(this.reading);
-        if(this.prvReading.length == 21){
+        if(this.prvReading.length == 11){
           this.prvReading.pop();
         }
     }
@@ -55,8 +56,10 @@ class Sonic{
       //[0]: true if triggered
       //[1]: switch data
       var stopped = -1;
-
-      for(var read of this.prvReading){
+      
+      
+      if(this.on == 0 || this.on == -1){
+        for(var read of this.prvReading){
           //if everyone in the prvReading = the current reading
           if(abs(read - this.reading)>3){
             stopped = 0;
@@ -64,7 +67,10 @@ class Sonic{
             break;
           }
           stopped = 1;
+        }
       }
+      
+      
 
       if(stopped == 1){
         //console.log("current reading: "+this.reading)
@@ -79,25 +85,29 @@ class Sonic{
               return [true,this.on];
               
             }
-            else{
-              return [false,this.on];
-            }
             
           }
-          else if(this.reading > 20 && this.state == true){
-            this.state = false;
-            this.on = 0;
-            console.log()
-            var result1 = this.avoidInitial(this.on);
-            //console.log(result1);
-            if(result1){
-              console.log(this.name +" uncover")
-              return [true,this.on];
-            }
-            else{
-              return [false,this.on];
-            }
-          }
+      }
+
+      // console.log("on: "+this.on)
+      // if(this.on == 1){
+      //   console.log("state: "+this.state == true);
+      //   console.log("out: "+this.reading > 20);
+      // }
+      
+
+      if(this.reading > 20 && this.state == true){
+        this.state = false;
+        this.on = 0;
+        var result1 = this.avoidInitial(this.on);
+        console.log(result1);
+        if(result1){
+          console.log(this.name +" uncover")
+          return [true,this.on];
+        }
+        else{
+          return [false,this.on];
+        }
       }
       
       return [false,this.on];
@@ -135,6 +145,7 @@ class Sonic{
 
     avoidInitial(a){
       //base case
+      
       if(this.initial == -1){
         return true;
       }
@@ -143,6 +154,7 @@ class Sonic{
         return false;
       }
       else {
+        console.log("initial: "+this.initial)
         this.initial = -1;
         return true;
       }

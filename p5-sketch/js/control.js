@@ -5,7 +5,7 @@ function initConsole() {
   consoles.push(new gConsole(1, [
     new Button("Hydron"),
     new flipSwitch("Scroll"),
-    new Matrix(["Vega","Sirius","Rigel","Mizar"]),
+    new Matrix(["Vega","Sirius","Rigel","Reactor"]),
     new Rotary("Matrix"),
     new Sonic("North"),
     new sliderPot("Counter")
@@ -27,14 +27,14 @@ function initConsole() {
     new sliderPot("Motion"),
     new sliderPot("Nano"),
     new Matrix(["Algol","Bupbup","Pollux","Rios"]),
-    new Rotary("Reactor"),
+    new Rotary("Mizar"),
 
   ]));
   
   consoles.push(new gConsole(4, [
     new flipSwitch("Pump"),
     new Button("Big Red Button"),
-    new sliderPot("Plasma"),
+    new sliderPot("Anode"),
     new sliderPot("Cathode"),
     new Rotary("Blender"),
     new Sonic("South"),
@@ -128,15 +128,14 @@ function newRoundInstruct(){
   }
 
   //make sure first 3 rounds assign not themselve instruction
-  // if(round == 0 || round == 1 || round == 2){
-  //   LCDInfo = specficAssign(LCDInfo);
-  // }
-  // else{
-  //   LCDInfo = shuffle(LCDInfo);
-  // }
+  if(round == 0 || round == 1 || round == 2){
+    LCDInfo = specficAssign(LCDInfo);
+  }
+  else{
+    LCDInfo = shuffle(LCDInfo);
+  }
   //console.log(LCDInfo)
   //generate 
-  LCDInfo = shuffle(LCDInfo);
   pushInfo();
 }
 

@@ -13,8 +13,8 @@ var serialDatas = [];
 var allInstructs = [];
 
 //flow of control
-var countdown = [50,45,40,30,27,24,21,18,15,12,10,8];
-//var countdown = [15,15,15,25,25,25,25,25,25,25,10,10,10,10,10,10,10,10,10,10];
+//var countdown = [50,45,40,30,27,24,21,18,15,12,10,8];
+var countdown = [15,15,15,25,25,25,25,25,25,25,10,10,10,10,10,10,10,10,10,10];
 var progress = 0;
 var lives = 10;
 var offset = 0;
@@ -47,7 +47,7 @@ function draw() {
   //phase 0 : introduction
 
   if(lives < 0){
-    phase++;
+    phase = 2;
   }
 
   if(phase == 0){
@@ -96,6 +96,10 @@ function draw() {
         //if progress goes to full 
         if(progress > 100){
           phase = 3;
+        }
+
+        if(lives < 0){
+          phase = 2;
         }
 
         rounds++;

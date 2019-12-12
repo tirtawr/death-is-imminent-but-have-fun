@@ -6,16 +6,16 @@ var badHitSound;
 var progressTrigger = [false,false,false,false,false,false];
 
 function preload(){
-    failSound = loadSound("./sounds/lose.wav");
-    introSound = loadSound("./sounds/introduction.wav");
+    failSound = loadSound("./sounds/lose.mp3");
+    introSound = loadSound("./sounds/introduction.mp3");
     goodHitSound = loadSound("./sounds/good.ogg");
     badHitSound = loadSound("./sounds/bad.mp3");
-    progressSound.push(loadSound("./sounds/10.wav"));
-    progressSound.push(loadSound("./sounds/30.wav"));
-    progressSound.push(loadSound("./sounds/50.wav"));
-    progressSound.push(loadSound("./sounds/70.wav"));
-    progressSound.push(loadSound("./sounds/90.wav"));
-    progressSound.push(loadSound("./sounds/100.wav"));
+    progressSound.push(loadSound("./sounds/10.mp3"));
+    progressSound.push(loadSound("./sounds/30.mp3"));
+    progressSound.push(loadSound("./sounds/50.mp3"));
+    progressSound.push(loadSound("./sounds/70.mp3"));
+    progressSound.push(loadSound("./sounds/90.mp3"));
+    progressSound.push(loadSound("./sounds/100.mp3"));
 }
 
 function newPlay(a){
