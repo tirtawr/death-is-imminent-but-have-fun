@@ -70,7 +70,7 @@ void loop() {
   if(Serial.available()>0){
     clearText();
     //digitalWrite(10,HIGH);
-    instruction = Serial.readString();
+    instruction = Serial.readStringUntil('\r\n');
     //inHolder.toCharArray(instruction,81);
     //Serial.print(instruction);
     printText();
