@@ -32,6 +32,7 @@ void setup() {
   pinMode(5,INPUT);
   pinMode(6,INPUT);
   pinMode(A2,INPUT);
+  pinMode(A3,INPUT);
 
 // ultrasonic
   pinMode(echoPin,INPUT);
@@ -104,7 +105,7 @@ void loop() {
   flip = digitalRead(3);
   slider = analogRead(A2);
   matrix[0] = digitalRead(4);
-  matrix[1] = digitalRead(5);
+  matrix[1] = digitalRead(A3);
   matrix[2] = digitalRead(6);
 
 

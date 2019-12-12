@@ -80,6 +80,10 @@ void loop() {
   }
 
   //rotary
+//  Serial.print(digitalRead(outputA));
+//  Serial.print(',');
+//  Serial.print(digitalRead(outputB));
+//  Serial.print(',');
   aState = digitalRead(outputA);
   if(aState != aLastState){
     if(digitalRead(outputB) != aState){
@@ -88,6 +92,7 @@ void loop() {
       //rotary --;
     }
   }
+//  Serial.println(rotary);
   aLastState = aState;
 
 

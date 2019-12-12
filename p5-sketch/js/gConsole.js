@@ -31,17 +31,17 @@ class gConsole {
   //from its interacts 
   getInstruction() {
     var interact = random(this.allButtons);
-    // //testing
+    //testing
     // if(this.id == 1){
     //   interact = this.allButtons[5];
     // }
 
-    // else if(this.id == 2){
+    // if(this.id == 2){
     //   interact = this.allButtons[3];
     // }
 
-    // else if(this.id == 3){
-    //   interact = this.allButtons[3];
+    // if(this.id == 3){
+    //   interact = this.allButtons[5];
     // }
 
     // else if(this.id == 4){
@@ -62,7 +62,11 @@ class gConsole {
   updateAll() {
     for (var button in this.allButtons) {
       this.allButtons[button].update(this.serialData[button]); 
-      //if(this.id == 2)
+      if(this.id == 2){
+        
+          //console.log(this.allButtons[button].name+ " "+this.serialData[button]); 
+
+      }
       //console.log(this.allButtons[button].name+": "+this.serialData[button])
     }
   }

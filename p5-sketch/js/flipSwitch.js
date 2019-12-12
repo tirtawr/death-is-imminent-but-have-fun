@@ -23,6 +23,7 @@ class flipSwitch{
   //stores the sensor data
   update(input){
     //console.log("initial is "+this.initial)
+    //console.log(input);
     this.flip = input;
     if(this.initial == -1){
       if(this.flip == 1){
@@ -59,7 +60,6 @@ class flipSwitch{
       //console.log(result1);
       
       if(result1){
-        
         return [true,this.on];
       }
       else{
@@ -74,7 +74,6 @@ class flipSwitch{
       var result1 = this.avoidInitial(this.on);
       //console.log(result1);
       if(result1){
-        
         return [true,this.on];
       }
       else{
@@ -105,6 +104,7 @@ class flipSwitch{
     //when at initial state
     //this.on is not initialized yet
     else if(this.on == -1){
+      //console.log(this.flip);
       if(this.flip == 1){
         determinant = 0;
         text1 = 'Turn '+this.name+' to off';

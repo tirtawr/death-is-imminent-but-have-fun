@@ -122,7 +122,7 @@ void loop() {
   Serial.print(',');
   Serial.print(slider2);
   Serial.print(',');
-  Serial.print(matrix[0]);
+  Serial.print(0);
   Serial.print(',');
   Serial.print(matrix[1]);
   Serial.print(',');

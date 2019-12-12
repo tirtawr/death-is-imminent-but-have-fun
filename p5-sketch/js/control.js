@@ -12,8 +12,8 @@ function initConsole() {
   ]));
   
   consoles.push(new gConsole(2, [
-    new flipSwitch("Thuban"),
     new flipSwitch("Lunar"),
+    new flipSwitch("Thuban"),
     new sliderPot("Nova"),
     new sliderPot("Gamma"),
     new Sonic("My Eyes"),
@@ -22,7 +22,7 @@ function initConsole() {
   ]));
   
   consoles.push(new gConsole(3, [
-    new flipSwitch("Ion"),
+    new flipSwitch("Noi"),
     new Button("Handler"),
     new sliderPot("Motion"),
     new sliderPot("Nano"),
@@ -45,6 +45,9 @@ function initConsole() {
 function serialUpdate() {
   for (var i = 0; i < consoles.length; i++) {
     consoles[i].serialData = serialDatas[i];
+
+    
+    
     consoles[i].updateAll();
     // if(i == 0){
     //   console.log(consoles[0].serialData[4])
@@ -98,6 +101,10 @@ function createLCDText(info){
   //[2] stores progress
   //[3] stores life
   //[4] stores the output
+
+
+
+
   infoArray[2] = populate("Progress: "+ progress+"%");
   infoArray[3] = populate("life: "+ lives);
   
@@ -128,8 +135,10 @@ function newRoundInstruct(){
   }
 
   //make sure first 3 rounds assign not themselve instruction
-  if(round == 0 || round == 1 || round == 2){
-    LCDInfo = specficAssign(LCDInfo);
+  if(rounds == 0 || rounds == 1 || rounds == 2){
+    
+    LCDInfo = specificAssign(LCDInfo);
+    
   }
   else{
     LCDInfo = shuffle(LCDInfo);
@@ -141,7 +150,9 @@ function newRoundInstruct(){
 
 function pushInfo(){
   //generate 
+  
   for (var k = 0 ; k < LCDInfo.length ; k ++){
+    console.log(LCDInfo[k]);
     LCDInfo[k] = createLCDText(LCDInfo[k]);
     
   }
@@ -182,15 +193,16 @@ function specificAssign(array){
   var t2 = array[1];
   var t3 = array[2];
   var t4 = array[3];
-  if(round == 0){
+  
+  if(rounds == 0){
     return [t2,t3,t4,t1];
   }
 
-  if(round == 1){
+  if(rounds == 1){
     return [t3,t4,t1,t2];
   }
 
-  if(round == 2){
+  if(rounds == 2){
     return [t4,t1,t2,t3];
   }
 }

@@ -88,6 +88,7 @@ class Matrix{
       console.log(this.name+" "+" on:"+this.on);
 
       if(this.name[0] == "Algol"){
+        
         if(this.on[0] == 1){
           determinant = random([3,4]);
           this.initial = 0;
@@ -99,9 +100,10 @@ class Matrix{
         }
         else if(this.on[2] == 1){
           determinant = 3;
-          this.initial = 0;
+          this.initial = 2;
         } 
-        else  determinant = random([2,3,4]);
+        
+        else  determinant = random([3,4]);
       }
       else{
         if(this.on[0] == 1){
@@ -115,7 +117,7 @@ class Matrix{
         }
         else if(this.on[2] == 1){
           determinant = random([2,3]);
-          this.initial = 0;
+          this.initial = 2;
         } 
         else  determinant = random([2,3,4]);
       }

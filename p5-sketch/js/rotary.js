@@ -16,7 +16,7 @@ class Rotary{
       this.state = false;
       this.prvReading = [0,0,0,0,0];
 
-      this.goal = 5;
+      this.goal = 1;
       this.last = -1;
 
       this.ranges = [0,33,66,100];

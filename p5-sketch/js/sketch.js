@@ -13,10 +13,11 @@ var serialDatas = [];
 var allInstructs = [];
 
 //flow of control
-//var countdown = [50,45,40,30,27,24,21,18,15,12,10,8];
-var countdown = [15,15,15,25,25,25,25,25,25,25,10,10,10,10,10,10,10,10,10,10];
+var countdown = [50,45,40,30,27,24,21,18,15,12,10,8];
+//var countdown = [15,15,15,25,25,25,25,25,25,25,10,10,10,10,10,10,10,10,10,10];
+//var countdown = [20,20,20,20,20,20,20,20,20,20,20,10,10,10,10,10,10,10,10,10];
 var progress = 0;
-var lives = 10;
+var lives = 20;
 var offset = 0;
 var rounds = 0;
 var roundGoing = false;
@@ -60,18 +61,19 @@ function draw() {
     //fetch new round of instruction
     serialUpdate();
     if(roundGoing == false){
-      playProgress();
+      playTimer();
+      
       offset = int(millis());
       roundGoing = true;
       hits = 0;
       newRoundInstruct();
     }
-
+    
     //if in round
     else{
       //if lives goes to 0
       //game fails
-      
+      playProgress();
       
       //if within time 
       if(int(millis()) - offset < countdown[rounds]*1000){
@@ -123,7 +125,16 @@ function draw() {
   }
 
   else if (phase ==3){
-    text("you fucking good.",width/2,height/2)
+    text("you fucking good.",width/2,height/2);
+    for (var LCD in LCDInfo){
+      var text1 = "Progress: 100%      " + "Ship is launching!!!"
+      text1 = populate(text1);
+      if(text.length < 80){
+        text1 += "                    ";
+      }
+      serials[LCD].write(text1);
+    }
+    newPlay(progressSound[5]);
     noLoop();
   }
 
