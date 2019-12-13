@@ -111,12 +111,11 @@ class Rotary{
     //generate instruction
     //return the name and the state
     instruct(){
-
-        var text1;
-        var determinant = this.goal;
-        this.last = this.reading;
-           text1 = 'Rotate '+this.name+' clockwise of '+determinant+" clicks";
-        
-        return [this.name,text1,determinant];
+      var text1;
+      var determinant = this.goal;
+      this.last = this.reading;
+          text1 = 'ROTATE '+this.name+" clockwise";
+      
+      return [this.name,text1,determinant];
     }
   }

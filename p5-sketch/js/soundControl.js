@@ -6,7 +6,7 @@ var goodHitSound;
 var badHitSound;
 var progressTrigger = [false,false,false,false,false,false];
 var timerTrigger = [false,false,false,false,false,false,false,false,false,false,false,false]
-
+var bgm;
 function preload(){
     failSound = loadSound("./sounds/lose.mp3");
     introSound = loadSound("./sounds/intro.mp3");
@@ -30,7 +30,13 @@ function preload(){
     timerAnnouncer.push(loadSound("./sounds/rounds/12.mp3"));
     timerAnnouncer.push(loadSound("./sounds/rounds/10.mp3"));
     timerAnnouncer.push(loadSound("./sounds/rounds/8.mp3")); 
+    //bgm = loadSound("./sounds/bgm.mp3");
 }
+
+// function playBgm(){
+//     bgm.setVolume(0.1);
+//     bgm.play();
+// }
 
 function newPlay(a){
     a.stop();

@@ -21,7 +21,7 @@ class Sonic{
     //run as serial input comes in
     //stores the sensor data
     update(input){
-      
+      //console.log(input)
       //console.log(this.name+" "+input);
       this.reading = input;
       if(this.initial == -1){
@@ -56,8 +56,9 @@ class Sonic{
       //[0]: true if triggered
       //[1]: switch data
       var stopped = -1;
-      
-      
+      // if(this.name == "My Eyes"){
+      //   console.log("reading is "+this.reading);
+      // }
       if(this.on == 0 || this.on == -1){
         for(var read of this.prvReading){
           //if everyone in the prvReading = the current reading
@@ -73,6 +74,11 @@ class Sonic{
       
 
       if(stopped == 1){
+        // if(this.name == "My Eyes"){
+        //   console.log("determine covering");
+        //   console.log("initial is "+this.initial);
+        // }
+        //console.log("reading is "+this.reading);
         //console.log("current reading: "+this.reading)
         if(this.reading < 8 && this.state == false){
             
@@ -97,6 +103,11 @@ class Sonic{
       
 
       if(this.reading > 20 && this.state == true){
+        if(this.name == "My Eyes"){
+          console.log("determine uncovering");
+          console.log("initial is "+this.initial);
+        }
+        //console.log("reading is "+this.reading);
         this.state = false;
         this.on = 0;
         var result1 = this.avoidInitial(this.on);
@@ -124,20 +135,20 @@ class Sonic{
 
       if(this.on == 0){
         determinant = 1;
-        text1 = 'Cover '+this.name;
+        text1 = 'COVER '+this.name;
       }
       else if(this.on == 1){
         determinant = 0;
-        text1 = 'Uncover '+this.name;
+        text1 = 'UNCOVER '+this.name;
       }
       else if (this.on == -1){
         if(this.reading > 10){
             determinant = 1;
-            text1 = 'Cover '+this.name;
+            text1 = 'COVER '+this.name;
         }
         else if(this.reading < 10){
             determinant = 0;
-            text1 = 'Uncover '+this.name;
+            text1 = 'UNCOVER '+this.name;
         }
       }
       return [this.name,text1,determinant];

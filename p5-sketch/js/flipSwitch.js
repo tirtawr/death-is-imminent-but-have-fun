@@ -94,11 +94,11 @@ class flipSwitch{
     
     if(this.on == 1){
        determinant = 0;
-       text1 = 'Turn '+this.name+' to off';
+       text1 = 'TURN '+this.name+' to off';
     }
     else if(this.on == 0){
       determinant = 1;
-      text1 = 'Turn '+this.name+' to on';
+      text1 = 'TURN '+this.name+' to on';
     }
 
     //when at initial state
@@ -107,11 +107,11 @@ class flipSwitch{
       //console.log(this.flip);
       if(this.flip == 1){
         determinant = 0;
-        text1 = 'Turn '+this.name+' to off';
+        text1 = 'TURN '+this.name+' to off';
       }
       else{
         determinant = 1;
-        text1 = 'Turn '+this.name+' to on';
+        text1 = 'TURN '+this.name+' to on';
       }
     }
     

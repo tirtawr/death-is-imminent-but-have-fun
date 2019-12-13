@@ -118,8 +118,8 @@ void loop() {
   Serial.print(',');
   Serial.print(button);
   Serial.print(',');
-  Serial.print(slider1);
-  Serial.print(',');
+//  Serial.print(slider1);
+//  Serial.print(',');
   Serial.print(slider2);
   Serial.print(',');
   Serial.print(0);

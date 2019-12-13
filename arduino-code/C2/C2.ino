@@ -73,7 +73,7 @@ void loop() {
     instruction = Serial.readStringUntil('\r\n');
     //inHolder.toCharArray(instruction,81);
     printText();
-    Serial.println(instruction);
+    //Serial.println(instruction);
   }
   else{
     //digitalWrite(10,LOW);

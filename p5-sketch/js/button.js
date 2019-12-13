@@ -56,7 +56,7 @@ class Button{
     //return the name and the state
     instruct(){
       var text1;
-      text1 = 'Hit '+this.name;
+      text1 = 'HIT '+this.name;
       return [this.name,text1];
     }
   }

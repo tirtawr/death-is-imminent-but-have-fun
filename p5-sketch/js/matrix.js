@@ -124,7 +124,7 @@ class Matrix{
       
       this.initial = -1;
 
-      text1 = 'Connect '+this.name[0]+' to '+this.name[determinant-1];
+      text1 = 'CONNECT '+this.name[0]+' to '+this.name[determinant-1];
       
       return [this.name,text1,determinant];
     }

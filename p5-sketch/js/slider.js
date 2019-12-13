@@ -112,18 +112,18 @@ class sliderPot{
         
         if(determinant == 100){
           if(this.name == "Nano" || this.name == "Motion" || this.name == "Counter"){
-            text1 = 'Slide '+this.name+' to left';
+            text1 = 'SLIDE '+this.name+' to left';
           }   
           else{
-            text1 = 'Slide '+this.name+' to bottom';
+            text1 = 'SLIDE '+this.name+' to bottom';
           }
         }
         else{
           if(this.name == "Nano" || this.name == "Motion" || this.name == "Counter"){
-            text1 = 'Slide '+this.name+' to right';
+            text1 = 'SLIDE '+this.name+' to right';
           }   
           else{
-            text1 = 'Slide '+this.name+' to top';
+            text1 = 'SLIDE '+this.name+' to top';
           }
         }
         

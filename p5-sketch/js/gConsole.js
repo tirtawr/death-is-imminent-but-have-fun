@@ -32,21 +32,21 @@ class gConsole {
   getInstruction() {
     var interact = random(this.allButtons);
     //testing
-    // if(this.id == 1){
-    //   interact = this.allButtons[5];
-    // }
+    if(this.id == 1){
+      interact = this.allButtons[0];
+    }
 
-    // if(this.id == 2){
-    //   interact = this.allButtons[3];
-    // }
+    if(this.id == 2){
+      interact = this.allButtons[1];
+    }
 
-    // if(this.id == 3){
-    //   interact = this.allButtons[5];
-    // }
+    if(this.id == 3){
+      interact = this.allButtons[3];
+    }
 
-    // else if(this.id == 4){
-    //   interact = this.allButtons[3];
-    // }
+    else if(this.id == 4){
+      interact = this.allButtons[4];
+    }
     
     //interact = this.allButtons[2];
     //console.log(interact.name+" giving ins");
@@ -99,7 +99,8 @@ class gConsole {
             hits ++;
             this.curIns = null;
             //console.log(this.id);
-            LCDInfo[traceLCDConsole(this.id-1)][0] = "Good JOB!";
+            LCDInfo[traceLCDConsole(this.id-1)][0] = "Task completed!";
+            
             pushInfo();
             //once the instruction is done
             //stop listen
@@ -110,7 +111,11 @@ class gConsole {
             console.log("fuck! "+result);
             newPlay(badHitSound);
             lives--;
-            pushInfo();
+            if(lives >= 0){
+              
+              pushInfo();
+            }
+            
             //this.updateFail(traceLCDConsole(this.id-1));
           }         
         }

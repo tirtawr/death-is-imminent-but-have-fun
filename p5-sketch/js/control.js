@@ -24,7 +24,7 @@ function initConsole() {
   consoles.push(new gConsole(3, [
     new flipSwitch("Noi"),
     new Button("Handler"),
-    new sliderPot("Motion"),
+    //new sliderPot("Motion"),
     new sliderPot("Nano"),
     new Matrix(["Algol","Bupbup","Pollux","Rios"]),
     new Rotary("Mizar"),
@@ -106,7 +106,7 @@ function createLCDText(info){
 
 
   infoArray[2] = populate("Progress: "+ progress+"%");
-  infoArray[3] = populate("life: "+ lives);
+  infoArray[3] = populate("Life: "+ lives);
   
   var pIns = populate(infoArray[0]);
   
@@ -145,7 +145,16 @@ function newRoundInstruct(){
   }
   //console.log(LCDInfo)
   //generate 
+  
   pushInfo();
+  
+  
+}
+
+function cleanAll(){
+  for(var i = 0 ; i < 4 ; i++){
+    serials[i].write("")
+  }
 }
 
 function pushInfo(){

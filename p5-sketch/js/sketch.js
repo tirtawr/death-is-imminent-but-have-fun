@@ -14,10 +14,10 @@ var allInstructs = [];
 
 //flow of control
 var countdown = [50,45,40,30,27,24,21,18,15,12,10,8];
-//var countdown = [15,15,15,25,25,25,25,25,25,25,10,10,10,10,10,10,10,10,10,10];
+//var countdown = [15,15,15,15,15,15,15,15,15,15,10,10,10,10,10,10,10,10,10,10];
 //var countdown = [20,20,20,20,20,20,20,20,20,20,20,10,10,10,10,10,10,10,10,10];
 var progress = 0;
-var lives = 20;
+var lives = 10;
 var offset = 0;
 var rounds = 0;
 var roundGoing = false;
@@ -25,6 +25,8 @@ var hits = 0;
 var timer = 0;
 var phase = 0;
 var lastTimer = 0;
+
+var clean = false;
 
 function setup() {
   //failSound.play();
@@ -35,12 +37,13 @@ function setup() {
   //serial data initialization
   serialDatas[0] = [0,0,[0,0,0],0,0,0];
   serialDatas[1] = [0,0,0,0,0,0];
-  serialDatas[2] = [0,0,0,0,[0,0,0],0];
+  serialDatas[2] = [0,0,0,[0,0,0],0];
   serialDatas[3] = [0,0,0,0,0,0];
   
   serialSetup();
   //get instruction in each round
   //newRoundInstruct();
+  //playBgm();
 }
 
 function draw() {
@@ -51,7 +54,17 @@ function draw() {
     phase = 2;
   }
 
+
+
   if(phase == 0){
+    if(clean == false){
+      for(var i = 0 ; i < 4 ; i++){
+        serials[i].write("                                                                                ")
+      }
+      clean = true;
+    }
+    
+
     //text("earth is fucked.",width/2,height/2)
   }
   else if(phase == 1){
@@ -59,8 +72,10 @@ function draw() {
     //record timestamp
     //put hits to 0
     //fetch new round of instruction
+    
     serialUpdate();
     if(roundGoing == false){
+
       playTimer();
       
       offset = int(millis());
@@ -113,7 +128,7 @@ function draw() {
     text("you fucked.",width/2,height/2)
     newPlay(failSound);
     for (var LCD in LCDInfo){
-      var text1 = "OMG Your Ship explodes"
+      var text1 = "Game over! Unfortunately you died. Better luck next time."
       text1 = populate(text1);
       if(text.length < 80){
         text1 += "                    ";
@@ -208,6 +223,9 @@ function keyPressed(){
     }
   }
 
+  // if(keyCode == LEFT_ARROW){
+  //   clearScreen();
+  // }
   else if(keyCode == UP_ARROW){
     hits++;
   }

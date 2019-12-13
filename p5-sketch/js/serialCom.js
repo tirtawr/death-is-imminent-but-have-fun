@@ -94,11 +94,11 @@ let options = {
           serialDatas[2] = [parseInt(currentString3[0]),
           parseInt(currentString3[1]),
             parseInt(currentString3[2]),
-              parseInt(currentString3[3]),
-                [parseInt(currentString3[4]),
-                  parseInt(currentString3[5]),
-                    parseInt(currentString3[6])],
-                      parseInt(currentString3[7])];
+              //parseInt(currentString3[3]),
+                [parseInt(currentString3[3]),
+                  parseInt(currentString3[4]),
+                    parseInt(currentString3[5])],
+                      parseInt(currentString3[6])];
       }
       //console.log(currentString2);
     
