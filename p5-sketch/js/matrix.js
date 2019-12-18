@@ -21,7 +21,7 @@ class Matrix{
     //run as serial input comes in
     //stores the sensor data
     update(input){
-      
+      this.on = input;
       if(this.initial == -1){
         //console.log(input);
         for(var i = 0 ; i < this.on.length ; i++){
@@ -33,8 +33,12 @@ class Matrix{
       }
       
 
-      this.on = input;
-      //console.log(this.on)
+      
+      // if(this.name[0] == "Vega"){
+      //   console.log(this.on)
+      //   console.log(this.initial);
+      // }
+      
     }
     
     initialize(){
@@ -58,7 +62,13 @@ class Matrix{
           //return the state for that trigger 
           //return the index
           //console.log(this.initial);
+
+          
           if(this.avoidInitial(i)){
+            if(this.name[0] == "Vega"){
+              console.log(this.on)
+              console.log(this.initial);
+            }
             return [true,this.on[i],i];
           }
 
@@ -85,10 +95,12 @@ class Matrix{
       var text1;
       var determinant;
       //console.log(this.on)
-      console.log(this.name+" "+" on:"+this.on);
+      //console.log(this.name+" "+" on:"+this.on);
 
       if(this.name[0] == "Algol"){
         
+        
+
         if(this.on[0] == 1){
           determinant = random([3,4]);
           this.initial = 0;
@@ -103,7 +115,10 @@ class Matrix{
           this.initial = 2;
         } 
         
-        else  determinant = random([3,4]);
+        else  {
+          determinant = random([3,4]);
+          this.initial = -1;
+        }
       }
       else{
         if(this.on[0] == 1){
@@ -119,12 +134,15 @@ class Matrix{
           determinant = random([2,3]);
           this.initial = 2;
         } 
-        else  determinant = random([2,3,4]);
+        else  {
+          determinant = random([2,3,4]);
+          this.initial = -1;
+        }
       }
       
       this.initial = -1;
 
-      text1 = 'CONNECT '+this.name[0]+' to '+this.name[determinant-1];
+      text1 = 'CONNECT '+this.name[0]+' and '+this.name[determinant-1];
       
       return [this.name,text1,determinant];
     }

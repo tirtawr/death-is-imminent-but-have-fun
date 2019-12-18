@@ -24,6 +24,8 @@ class gConsole {
     this.curIns = null;
     this.lastHit = ['null','null'];
 
+    this.LCDInfo = ["",-1]
+
     this.pushInfo = null;
   }
   
@@ -32,21 +34,21 @@ class gConsole {
   getInstruction() {
     var interact = random(this.allButtons);
     //testing
-    if(this.id == 1){
-      interact = this.allButtons[0];
-    }
+    // if(this.id == 1){
+    //   interact = this.allButtons[2];
+    // }
 
-    if(this.id == 2){
-      interact = this.allButtons[1];
-    }
+    // if(this.id == 2){
+    //   interact = this.allButtons[0];
+    // }
 
-    if(this.id == 3){
-      interact = this.allButtons[3];
-    }
+    // if(this.id == 3){
+    //   interact = this.allButtons[3];
+    // }
 
-    else if(this.id == 4){
-      interact = this.allButtons[4];
-    }
+    // else if(this.id == 4){
+    //   interact = this.allButtons[0];
+    // }
     
     //interact = this.allButtons[2];
     //console.log(interact.name+" giving ins");
@@ -98,8 +100,8 @@ class gConsole {
             newPlay(goodHitSound);
             hits ++;
             this.curIns = null;
-            //console.log(this.id);
-            LCDInfo[traceLCDConsole(this.id-1)][0] = "Task completed!";
+            console.log(consoles[traceLCDConsole(this.id-1)]);
+            consoles[traceLCDConsole(this.id-1)].LCDInfo[0] = "Task completed!";
             
             pushInfo();
             //once the instruction is done

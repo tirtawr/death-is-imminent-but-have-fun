@@ -71,6 +71,9 @@ void loop() {
     //digitalWrite(10,HIGH);
     clearText();
     instruction = Serial.readStringUntil('\r\n');
+    while(Serial.available()>0){
+      Serial.read();
+    }
     //inHolder.toCharArray(instruction,81);
     printText();
     //Serial.println(instruction);

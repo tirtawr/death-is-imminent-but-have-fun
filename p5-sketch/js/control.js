@@ -73,22 +73,21 @@ function listenEvents() {
 //[0] represents the texts
 //  could  be inst or done
 //[1] represents target console to do the job
-var LCDInfo = [["",-1],["",-1],["",-1],["",-1]]
+//var LCDInfo = [["",-1],["",-1],["",-1],["",-1]]
 
 //function to populate space to fill the serial string
-function populate(text1){
+function populate(text1, index){
   var tLength = text1.length;
-  if(tLength <= 20){
+  if(index == 0){
     for(var i = 0 ; i < 20-tLength ; i++){
       text1 = text1 + " ";
     }
   }
-  else if(tLength > 20){
-    for(var i = 0 ; i < 40-tLength ; i++){
+  else if(index == 1){
+    for(var i = 0 ; i < 120-tLength ; i++){
       text1 = text1 + " ";
     }
   }
-  
   return text1;
 }
 
@@ -105,16 +104,16 @@ function createLCDText(info){
 
 
 
-  infoArray[2] = populate("Progress: "+ progress+"%");
-  infoArray[3] = populate("Life: "+ lives);
+  infoArray[2] = populate("Progress: "+ progress+"%",0);
+  infoArray[3] = populate("Group Lives: "+ lives,0);
   
-  var pIns = populate(infoArray[0]);
+  var pIns = populate(infoArray[0],1);
   
   infoArray[4] = infoArray[2]+infoArray[3]+pIns;
 
   if(infoArray[4].length == 60){
     
-    infoArray[4] = infoArray[4] + populate(" ")
+    infoArray[4] = infoArray[4] + populate(" ",1)
   }
   return infoArray;
 }
@@ -127,21 +126,21 @@ function newRoundInstruct(){
     
   }
   
-  //randomize
-  for(var j = 0 ; j < LCDInfo.length ; j ++){
-    LCDInfo[j][0] = allInstructs[j][1];
-    LCDInfo[j][1] = j;
+  //give instructions to the original
+  for(var j = 0 ; j < 4 ; j ++){
+    consoles[j].LCDInfo[0] = allInstructs[j][1];
+    consoles[j].LCDInfo[1] = j;
     
   }
 
   //make sure first 3 rounds assign not themselve instruction
   if(rounds == 0 || rounds == 1 || rounds == 2){
     
-    LCDInfo = specificAssign(LCDInfo);
+    specificAssign();
     
   }
   else{
-    LCDInfo = shuffle(LCDInfo);
+    myShuffle();
   }
   //console.log(LCDInfo)
   //generate 
@@ -151,38 +150,41 @@ function newRoundInstruct(){
   
 }
 
-function cleanAll(){
-  for(var i = 0 ; i < 4 ; i++){
-    serials[i].write("")
-  }
-}
+// function clearScreen() {
+//   console.log('clearScreen');
+//   for (var LCD in LCDInfo){
+//     serials[LCD].write('                                                                                ');
+//   }
+// }
+
 
 function pushInfo(){
   //generate 
   
-  for (var k = 0 ; k < LCDInfo.length ; k ++){
-    console.log(LCDInfo[k]);
-    LCDInfo[k] = createLCDText(LCDInfo[k]);
+  for (var k = 0 ; k < 4 ; k ++){
+    console.log("creating: "+consoles[k].LCDInfo);
+    consoles[k].LCDInfo = createLCDText(consoles[k].LCDInfo);
     
   }
 
-  for (var LCD in LCDInfo){
-    serials[LCD].write(LCDInfo[LCD][4]);
-    console.log(LCDInfo[LCD][4]);
+  for (var i = 0 ; i < 4 ; i++){
+    serials[i].write(consoles[i].LCDInfo[4]);
+    console.log("writing: "+consoles[i].LCDInfo[4]);
   }
 }
 
 //starts from the console that does the job
 //find the console that shows the instruction
 function traceLCDConsole(i){
-  for(var LCD in LCDInfo){
-    if(LCDInfo[LCD][1] == i){
-      return LCD;
+  for(var j = 0 ; j < 4 ; j++){
+    if(consoles[j].LCDInfo[1] == i){
+      return j;
     }
   }
   return -1;
 }
-function shuffle(array) {
+function myShuffle() {
+  var array = [consoles[0].LCDInfo, consoles[1].LCDInfo, consoles[2].LCDInfo, consoles[3].LCDInfo];
   var currentIndex = array.length, temporaryValue, randomIndex;
   // While there remain elements to shuffle...
   while (0 !== currentIndex) {
@@ -194,24 +196,37 @@ function shuffle(array) {
     array[currentIndex] = array[randomIndex];
     array[randomIndex] = temporaryValue;
   }
-  return array;
+  consoles[0].LCDInfo = array[0];
+  consoles[1].LCDInfo = array[1];
+  consoles[2].LCDInfo = array[2];
+  consoles[3].LCDInfo = array[3];
 }
 
-function specificAssign(array){
-  var t1 = array[0];
-  var t2 = array[1];
-  var t3 = array[2];
-  var t4 = array[3];
+function specificAssign(){
+  var t1 = consoles[0].LCDInfo;
+  var t2 = consoles[1].LCDInfo;
+  var t3 = consoles[2].LCDInfo;
+  var t4 = consoles[3].LCDInfo;
   
   if(rounds == 0){
-    return [t2,t3,t4,t1];
+    consoles[0].LCDInfo = t2;
+    consoles[1].LCDInfo = t3;
+    consoles[2].LCDInfo = t4;
+    consoles[3].LCDInfo = t1;
+    
   }
 
   if(rounds == 1){
-    return [t3,t4,t1,t2];
+    consoles[0].LCDInfo = t3;
+    consoles[1].LCDInfo = t4;
+    consoles[2].LCDInfo = t1;
+    consoles[3].LCDInfo = t2;
   }
 
   if(rounds == 2){
-    return [t4,t1,t2,t3];
+    consoles[0].LCDInfo = t4;
+    consoles[1].LCDInfo = t1;
+    consoles[2].LCDInfo = t2;
+    consoles[3].LCDInfo = t3;
   }
 }

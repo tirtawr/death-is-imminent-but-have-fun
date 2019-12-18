@@ -105,7 +105,7 @@ void loop() {
   flip = digitalRead(3);
   slider = analogRead(A2);
   matrix[0] = digitalRead(4);
-  matrix[1] = digitalRead(A3);
+  matrix[1] = digitalRead(5);
   matrix[2] = digitalRead(6);
 
 

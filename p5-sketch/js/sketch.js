@@ -25,9 +25,11 @@ var hits = 0;
 var timer = 0;
 var phase = 0;
 var lastTimer = 0;
+var curTimer = -1;
 
 var clean = false;
-
+var earlyEnd = false;
+var gCount = 3;
 function setup() {
   //failSound.play();
 
@@ -44,6 +46,8 @@ function setup() {
   //get instruction in each round
   //newRoundInstruct();
   //playBgm();
+  introSound.setVolume(1.3);
+
 }
 
 function draw() {
@@ -54,12 +58,10 @@ function draw() {
     phase = 2;
   }
 
-
-
   if(phase == 0){
     if(clean == false){
       for(var i = 0 ; i < 4 ; i++){
-        serials[i].write("                                                                                ")
+        serials[i].write("                                                                                           ")
       }
       clean = true;
     }
@@ -77,9 +79,10 @@ function draw() {
     if(roundGoing == false){
 
       playTimer();
-      
+      curTimer = countdown[rounds]*1000;
       offset = int(millis());
       roundGoing = true;
+      earlyEnd = false;
       hits = 0;
       newRoundInstruct();
     }
@@ -90,9 +93,10 @@ function draw() {
       //game fails
       playProgress();
       
+
       //if within time 
-      if(int(millis()) - offset < countdown[rounds]*1000){
-        timer = (countdown[rounds]*1000 - (int(millis()) - offset));
+      if(int(millis()) - offset < curTimer){
+        timer = (curTimer - (int(millis()) - offset));
         // if(int(timer/1000) != lastTimer){
         //   console.log(lastTimer);
         //   lastTimer = int(timer/1000);
@@ -100,6 +104,16 @@ function draw() {
         // }
         lastTimer = int(timer/1000);
         printAllStats();
+
+        if(hits == 4){
+          if(earlyEnd == false){
+            if(rounds == 0 || rounds == 1 || rounds == 2 || rounds == 3 || rounds == 4 || rounds == 5){
+              curTimer = int(millis()) - offset + 4000;
+            }
+            earlyEnd = true;
+          }
+          
+        }
       }
       //if time runs out
       else{
@@ -113,44 +127,55 @@ function draw() {
         //if progress goes to full 
         if(progress > 100){
           phase = 3;
+          return;
         }
 
         if(lives < 0){
           phase = 2;
+          return;
         }
 
+        
+        
         rounds++;
       }
     }
   }
   //failure
   else if (phase ==2){
+    //gCount --;
     text("you fucked.",width/2,height/2)
     newPlay(failSound);
-    for (var LCD in LCDInfo){
+    for (var i = 0 ; i <4 ; i++){
       var text1 = "Game over! Unfortunately you died. Better luck next time."
       text1 = populate(text1);
       if(text.length < 80){
-        text1 += "                    ";
+        text1 += "                                                                       ";
       }
-      serials[LCD].write(text1);
-      
+      serials[i].write(text1);
     }
-    noLoop();
+
+    //if(gCount < 0){
+      noLoop();
+    //}
+    
   }
 
   else if (phase ==3){
+    //gCount --;
     text("you fucking good.",width/2,height/2);
-    for (var LCD in LCDInfo){
+    for (var i = 0 ; i < 4; i++){
       var text1 = "Progress: 100%      " + "Ship is launching!!!"
       text1 = populate(text1);
       if(text.length < 80){
-        text1 += "                    ";
+        text1 += "                                                                       ";
       }
-      serials[LCD].write(text1);
+      serials[i].write(text1);
     }
     newPlay(progressSound[5]);
-    noLoop();
+    //if(gCount < 0){
+      noLoop();
+    //}
   }
 
 
@@ -169,7 +194,7 @@ function printAllStats(){
   text("progress: "+progress,width/2,height/2+30);
   text("round: "+rounds,width/2,height/2+45);
   text("hits: "+hits,width/2,height/2+60);
-  text("Ins: "+LCDInfo,width/2,height/2+75)
+  //text("Ins: "+LCDIn,width/2,height/2+75)
 }
 
 
@@ -217,6 +242,49 @@ function keyPressed(){
   if(key == '.'){
     phase ++;
   }
+
+  if(key == 'r'){
+    pushInfo();
+  }
+
+  if(key == ","){
+    if (phase ==2){
+      //gCount --;
+      //text("you fucked.",width/2,height/2)
+      //newPlay(failSound);
+      for (var i = 0 ; i <4 ; i++){
+        var text1 = "Game over! Unfortunately you died. Better luck next time."
+        text1 = populate(text1);
+        if(text.length < 80){
+          text1 += "                                                                       ";
+        }
+        serials[i].write(text1);
+      }
+  
+      //if(gCount < 0){
+        //noLoop();
+      //}
+      
+    }
+  
+    else if (phase ==3){
+      //gCount --;
+      //text("you fucking good.",width/2,height/2);
+      for (var i = 0 ; i < 4; i++){
+        var text1 = "Progress: 100%      " + "Ship is launching!!!"
+        text1 = populate(text1);
+        if(text.length < 80){
+          text1 += "                                                                       ";
+        }
+        serials[i].write(text1);
+      }
+      //newPlay(progressSound[5]);
+      //if(gCount < 0){
+        //noLoop();
+      //}
+    }
+  }
+
   if(phase == 0){
     if(key == " "){
       newPlay(introSound);  
